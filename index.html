@@ -756,6 +756,14 @@ async function protokoll(aktion, alt, neu, b = {}) {
   await FS.schreiben([], '_protokoll.csv', new Blob([alt_ + z + '\r\n'], { type: 'text/csv' }));
 }
 
+/* Werkbank-Bus (WB-07): gleiches Format wie im Kontor { thema, von, zeit } über Kanal „werkbank“ und Weckschlüssel „wb-signal“ */
+const WB_VON = 'belegbuch-' + Math.random().toString(36).slice(2);
+let wbKanal = null; try { wbKanal = new BroadcastChannel('werkbank'); } catch (e) {}
+function wbMelden(thema, zusatz) {
+  const n = Object.assign({ thema, von: WB_VON, zeit: Date.now() }, zusatz || {});
+  try { wbKanal?.postMessage(n); } catch (e) {}
+  lsRoh('wb-signal', JSON.stringify(n));
+}
 /* ═══ Lesekopien für Kontor und Terminbuch (WB-04, WB-10, BR-09) ═══
    Nur Zähler und Summen; Fristen nur mit Aussteller und Datum. Keine Beträge, IBAN, Pfade. */
 function schreibeLesekopien() {
@@ -773,7 +781,7 @@ function schreibeLesekopien() {
   const fristen = (S.bereich === 'privat' && S.cfg.erinnerung.privatSpur === false) || !S.cfg.erinnerung.terminbuch ? [] :
     offen.filter(b => b.faellig).map(b => ({ id: b.id, faellig: b.faellig, titel: 'Rechnung ' + (b.aussteller || ''), rubrik: b.rubrik, status: 'offen' }));
   lsSet(LS('fristen'), fristen);
-  try { lsRoh('wb-signal', String(Date.now())); new BroadcastChannel('werkbank').postMessage({ quelle: 'belegbuch', bereich: S.bereich, t: Date.now() }); } catch (e) {}
+  wbMelden('belegbuch', { bereich: S.bereich });
 }
 
 /* ═══ Lesen: Vorschaubild, Textebene, Texterkennung (lokal) ═══ */
@@ -2629,7 +2637,7 @@ async function oeffne(h, test) {
   if (p.get('beleg')) { S.ansicht = 'ablage'; zeichne(); belegblatt(p.get('beleg')); }
   if (p.get('aktion') === 'scan') $('#dateiwahl')?.click();
 }
-function themaSetzen(t) { document.documentElement.setAttribute('data-theme', t); ['wb-theme', 'wb-cockpit-theme'].forEach(k => lsRoh(k, t)); }
+function themaSetzen(t) { document.documentElement.setAttribute('data-theme', t); ['wb-theme', 'wb-cockpit-theme'].forEach(k => lsRoh(k, t)); wbMelden('theme', { theme: t }); }
 async function start() {
   const gespeichert = lsRoh('wb-theme') || lsRoh('wb-cockpit-theme');
   document.documentElement.setAttribute('data-theme', gespeichert || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
@@ -2675,7 +2683,9 @@ let ruhe; const wach = () => { document.body.classList.remove('sichtschutz'); cl
 document.addEventListener('visibilitychange', () => { if (document.hidden) document.body.classList.add('sichtschutz'); });
 ['pointerdown', 'keydown'].forEach(t => document.addEventListener(t, wach, { capture: true })); wach();
 /* Werkbank-Bus: andere Werkzeuge melden Themenwechsel */
-try { new BroadcastChannel('werkbank').onmessage = () => { const t = lsRoh('wb-theme'); if (t) document.documentElement.setAttribute('data-theme', t); }; } catch (e) {}
+const wbTheme = n => { if (n && n.thema === 'theme' && (n.theme === 'light' || n.theme === 'dark') && n.von !== WB_VON) document.documentElement.setAttribute('data-theme', n.theme); };
+if (wbKanal) wbKanal.onmessage = e => wbTheme(e.data);
+addEventListener('storage', e => { if (e.key === 'wb-signal' && e.newValue) { try { wbTheme(JSON.parse(e.newValue)); } catch (x) {} } });
 /* Offline nach dem ersten Laden (RB-01) */
 
 window.addEventListener('focus', async () => { if (S.root && !S.busy && !ANALYSE.laeuft && ['eingang', 'vorschlaege'].includes(S.ansicht) && !$('dialog[open]') && !$('.zoom')) { const n = S.eingang.length; await ladeEingang(); if (S.eingang.length !== n) zeichne(); } });
