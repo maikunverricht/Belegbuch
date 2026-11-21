@@ -417,6 +417,106 @@ body.mobil dialog .sheet{height:100%;max-height:100%;border-radius:0}
 @keyframes bbMove{0%{left:14%;opacity:0}15%{opacity:1}100%{left:72%;opacity:1}}
 @keyframes bbYearIn{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
 .rfeld.bump{animation:bbBump .7s .75s var(--kurve) both}
+/* ═══ Neugestaltung „Meine Firma“ (Nov 2026): Jahresmappe, Karten im Eingang, Ordner, Fristringe ═══ */
+@property --p{syntax:'<number>';inherits:true;initial-value:0}
+:root{--lila:#B79CF2}
+html[data-theme="light"]{--lila:#7552C9}
+.bb-kopf{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px}
+.bb-kopf h2{margin:0;font-size:20px;font-weight:800;font-variation-settings:'wdth' 110;letter-spacing:-.01em}
+.bb-kopf .sp{flex:1}
+.bb-zahl{height:24px;padding:0 9px;border-radius:100px;font-family:var(--mono);font-size:12px;display:inline-flex;align-items:center;background:var(--film);border:1px solid var(--line);color:var(--text-2)}
+/* Jahresmappe */
+.bb-mappe{position:relative;overflow:hidden;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:26px;align-items:center;padding:22px 26px;border-radius:28px;
+  border:1px solid var(--glass-edge);background:var(--glass);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),var(--shadow);-webkit-backdrop-filter:blur(20px) saturate(1.4);backdrop-filter:blur(20px) saturate(1.4);animation:bbRise var(--t-lang) var(--kurve) both}
+.bb-mappe::before{content:"";position:absolute;width:520px;height:520px;left:-200px;top:-280px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--geld) 28%,transparent),transparent 65%);pointer-events:none}
+.bb-paket{--p:0;position:relative;width:146px;height:146px;border:0;background:none;padding:0;cursor:pointer;transition:--p 1.4s var(--kurve)}
+.bb-paket .rg{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,var(--geld),var(--amber) calc(var(--p)*1%),color-mix(in srgb,var(--text-3) 18%,transparent) 0);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 12px),#000 calc(100% - 11px));mask:radial-gradient(farthest-side,transparent calc(100% - 12px),#000 calc(100% - 11px));filter:drop-shadow(0 0 12px color-mix(in srgb,var(--amber) 40%,transparent))}
+.bb-paket.voll .rg{background:conic-gradient(var(--free) 100%,transparent 0);filter:drop-shadow(0 0 12px color-mix(in srgb,var(--free) 45%,transparent))}
+.bb-paket .in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.bb-paket b{font-size:32px;font-weight:800;font-variation-settings:'wdth' 118;line-height:1}
+.bb-paket small{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-top:5px}
+.bb-mitte{position:relative;min-width:0;display:flex;flex-direction:column;gap:12px}
+.bb-mitte .chip[aria-pressed="true"]{background:var(--text);color:var(--void);border-color:transparent}
+.bb-satz{margin:0;font-size:clamp(22px,2.6vw,32px);font-weight:700;font-variation-settings:'wdth' 112;letter-spacing:-.02em;line-height:1.15;color:var(--text-2)}
+.bb-satz b{color:var(--text);font-weight:800}
+.bb-fehlt{display:flex;flex-wrap:wrap;gap:6px}
+.bb-fehlt span{height:28px;padding:0 10px;border-radius:100px;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2);background:var(--film);border:1px dashed var(--line-strong)}
+.bb-fehlt span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber)}
+.bb-fehlt span.mehr::before{display:none}
+.bb-mz{position:relative;display:flex;flex-direction:column;gap:10px;min-width:190px}
+.bb-mz > div{padding:12px 14px;border-radius:16px;background:var(--film);border:1px solid var(--line)}
+.bb-mz small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.bb-mz b{display:block;margin-top:2px;font-size:21px;font-weight:800;font-variation-settings:'wdth' 114;white-space:nowrap}
+.bb-mz .rot b{color:var(--red-ink)}
+/* Erfassung als Einwurf */
+.erfassung{border-radius:22px;border-color:color-mix(in srgb,var(--amber) 55%,transparent);background:linear-gradient(120deg,color-mix(in srgb,var(--amber) 8%,transparent),transparent 60%);transition:transform var(--t-m) var(--kurve),border-color var(--t-s)}
+.erfassung:hover{transform:translateY(-2px);border-color:var(--amber)}
+.erfassung b{font-size:19px;font-weight:800;font-variation-settings:'wdth' 112}
+.bb-stapel{position:relative;width:64px;height:72px;flex:none}
+.bb-stapel i{position:absolute;left:8px;bottom:0;width:48px;height:62px;border-radius:7px;background:#fbfaf7;box-shadow:0 10px 20px -8px rgba(0,0,0,.6);animation:bbFall 3.2s var(--kurve) infinite}
+.bb-stapel i::before{content:"";position:absolute;left:9px;right:9px;top:12px;height:28px;background:repeating-linear-gradient(#c9c4b8 0 2px,transparent 2px 7px)}
+.bb-stapel i:nth-child(2){animation-delay:1.6s}
+@keyframes bbFall{0%{transform:translateY(-34px) rotate(-8deg);opacity:0}25%{opacity:1}55%{transform:translateY(0) rotate(3deg);opacity:1}85%,100%{transform:translateY(6px) rotate(3deg);opacity:0}}
+/* Eingangskarten */
+.raster.karten{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.kachel-w{--c:var(--geld);display:flex;flex-direction:column;gap:10px;padding:10px 10px 12px;border-radius:22px;border:1px solid var(--glass-edge);background:var(--glass);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:var(--shadow);transition:transform var(--t-m) var(--kurve),border-color var(--t-s)}
+.kachel-w:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--c) 70%,transparent)}
+.kachel-w .kachel .blatt{aspect-ratio:4/3;border-radius:14px}
+.kachel-w .kachel:hover .blatt{transform:none}
+.kachel-w .kachel .wer{font-size:16px;font-weight:600;padding:0 4px}
+.kachel-w .kachel .zeile{padding:0 4px}
+.kachel-w .kf{display:flex;align-items:center;gap:8px;padding:0 4px;min-height:36px}
+.kachel-w .rub{display:block;line-height:28px;height:30px;padding:0 11px;border-radius:100px;font-size:12px;font-weight:600;color:var(--c);min-width:0;
+  background:color-mix(in srgb,var(--c) 14%,transparent);border:1px solid color-mix(in srgb,var(--c) 40%,transparent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kachel-w .rub .punkt{vertical-align:middle;margin:-2px 7px 0 0}
+.kachel-w .rub.leer{color:var(--text-3);background:var(--film);border-color:var(--line)}
+.kachel-w .ok-knopf{margin-left:auto;flex:none;width:36px;height:36px;border-radius:50%;border:0;background:var(--free);color:var(--ink);font-weight:800;cursor:pointer;
+  box-shadow:0 8px 18px -6px var(--free);transition:transform .3s cubic-bezier(.3,1.6,.4,1)}
+.kachel-w .ok-knopf:hover{transform:scale(1.12)}
+.kachel-w .ok-knopf:disabled{opacity:.4;cursor:default;transform:none}
+body.auswahl .kachel-w .ok-knopf{display:none}
+.kachel-w.weg{animation:bbWeg .5s var(--kurve) forwards;pointer-events:none}
+@keyframes bbWeg{to{opacity:0;transform:translateY(30px) scale(.9)}}
+/* Ablage als Ordner */
+.ordner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 14px;grid-auto-flow:row dense;padding-top:10px}
+.od{--c:var(--geld);position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:18px 16px 14px;border-radius:18px 18px 22px 22px;cursor:pointer;
+  border:1px solid var(--glass-edge);background:var(--glass);box-shadow:var(--shadow);transition:transform var(--t-m) var(--kurve),border-color var(--t-s);animation:bbRise var(--t-lang) var(--kurve) both}
+.od::before{content:"";position:absolute;left:14px;top:-9px;width:72px;height:14px;border-radius:8px 8px 0 0;background:var(--c);opacity:.85}
+.od:hover,.od[aria-expanded="true"]{transform:translateY(-4px);border-color:color-mix(in srgb,var(--c) 60%,transparent)}
+.od .punkt{position:absolute;right:14px;top:16px}
+.od .kz{font-family:var(--mono);font-size:12px;color:var(--c);font-weight:700}
+.od b{display:block;margin-top:6px;font-size:15px;font-weight:600}
+.od small{display:block;font-size:11px;color:var(--text-3)}
+.od .sum{margin-top:12px;font-size:21px;font-weight:800;font-variation-settings:'wdth' 114;white-space:nowrap}
+.od .sum span{font-size:12px;font-weight:500;color:var(--text-3);margin-left:6px;font-family:var(--mono)}
+.od .mon{display:flex;align-items:flex-end;gap:3px;height:28px;margin-top:10px;width:100%}
+.od .mon i{flex:1;min-height:2px;border-radius:2px;background:color-mix(in srgb,var(--c) 55%,transparent)}
+.od.leer > *{opacity:.5}
+.od-inhalt{grid-column:1/-1;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);border-radius:18px;background:var(--glass);padding:6px 10px 10px;animation:bbRise .6s var(--kurve) both}
+/* Offen mit Fristring */
+.zeile-o{border-radius:18px;border-color:var(--glass-edge)}
+.bb-frist{--p:0;--c:var(--amber);position:relative;width:42px;height:42px;flex:none}
+.bb-frist::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),color-mix(in srgb,var(--text-3) 22%,transparent) 0);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px))}
+.bb-frist span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--text-2)}
+/* Dock: aktive Ansicht leuchtet */
+.dock button[aria-current="page"]{background:linear-gradient(145deg,color-mix(in srgb,var(--amber) 85%,#fff),var(--amber));color:var(--ink);font-weight:700;box-shadow:0 10px 24px -8px var(--amber)}
+@media (max-width:900px){
+  .bb-mappe{grid-template-columns:1fr;justify-items:center;text-align:center;gap:16px}
+  .bb-mitte{align-items:center}.bb-mitte .chips,.bb-fehlt{justify-content:center}
+  .bb-mz{flex-direction:row;width:100%;min-width:0}.bb-mz > div{flex:1;min-width:0}
+  .ordner{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .raster.karten{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .kachel-w{padding:8px;border-radius:18px}.kachel-w .rub{font-size:11px;padding:0 8px}.kachel-w .ok-knopf{width:32px;height:32px}
+  .bb-mappe{padding:20px 16px}
+  .nav .suche,.nav .modus{display:none}
+}
+@media (prefers-reduced-motion:reduce){.bb-stapel i{animation:none;opacity:1}}
+
 
 </style>
 </head>
@@ -1531,9 +1631,9 @@ function zeichneDock() {
   const dock = $('#dock'); dock.textContent = '';
   if (S.mobil || !S.root) { dock.hidden = true; return; } dock.hidden = false;
   const offen = alleBelege().filter(b => b.zahlstatus === 'offen'); const ueber = offen.some(b => b.faellig && tageBis(b.faellig) < 0);
-  const vor = S.eingang.filter(analysiert).length;
-  [['eingang', 'Eingang', IK.eingang, S.eingang.length, ''], ['vorschlaege', 'Vorschläge', IK.vor, vor, ''], ['offen', 'Offen', IK.offen, offen.length, ueber ? 'rot' : ''], ['ablage', 'Ablage', IK.ablage, 0, '']].forEach(([k, n, ic, z, kl]) => {
-    const b = el('button', { 'aria-current': S.ansicht === k ? 'page' : null, onclick: () => geheZu(k), html: ic + `<span>${n}</span>` });
+  const aktiv = S.ansicht === 'vorschlaege' ? 'eingang' : S.ansicht;
+  [['eingang', 'Eingang', IK.eingang, S.eingang.length, ''], ['ablage', 'Ablage', IK.ablage, 0, ''], ['offen', 'Offen', IK.offen, offen.length, ueber ? 'rot' : '']].forEach(([k, n, ic, z, kl]) => {
+    const b = el('button', { 'aria-current': aktiv === k ? 'page' : null, onclick: () => geheZu(k), html: ic + `<span>${n}</span>` });
     if (z) b.append(el('span', { class: 'plakette ' + kl }, z)); dock.append(b);
   });
 }
@@ -1576,7 +1676,7 @@ function zeichneInhalt() {
   if (S.mobil) return m.append(ansichtMobil());
   if (!S.root) return m.append(ansichtStart());
   if (!S.cfg.personen.length) return m.append(ansichtEinrichtung());
-  const v = { eingang: ansichtEingang, vorschlaege: ansichtVorschlaege, offen: ansichtOffen, ablage: ansichtAblage, auswertung: ansichtAuswertung, einstellungen: ansichtEinstellungen, hilfe: ansichtHilfe }[S.ansicht] || ansichtEingang;
+  const v = { eingang: ansichtEingang, vorschlaege: ansichtEingang, offen: ansichtOffen, ablage: ansichtAblage, auswertung: ansichtAuswertung, einstellungen: ansichtEinstellungen, hilfe: ansichtHilfe }[S.ansicht] || ansichtEingang;
   m.append(v());
 }
 
@@ -1586,10 +1686,10 @@ function erfassungsfeld() {
   const kamera = el('input', { type: 'file', accept: 'image/*', capture: 'environment', hidden: true, onchange: ev => { erfasse(ev.target.files); ev.target.value = ''; } });
   const fotos = el('input', { type: 'file', multiple: true, accept: 'image/*', hidden: true, onchange: ev => { erfasse(ev.target.files); ev.target.value = ''; } });
   const feld = el('button', { class: 'erfassung', id: 'erfassungsfeld', onclick: () => (S.mobil ? kamera : datei).click() },
-    el('span', { class: 'knopf', html: S.mobil ? IK.kamera : IK.ablegen }),
-    el('span', {}, el('b', { id: 'erfText' }, S.mobil ? 'Tippen zum Scannen' : 'Belege hier ablegen'), el('span', { class: 'lbl' }, S.mobil ? 'oder PDF, Foto, Mail-Anhang wählen' : 'PDF, Foto, Mail-Anhang – oder klicken zum Auswählen')));
+    S.mobil ? el('span', { class: 'knopf', html: IK.kamera }) : el('span', { class: 'bb-stapel', 'aria-hidden': 'true' }, el('i'), el('i')),
+    el('span', {}, el('b', { id: 'erfText' }, S.mobil ? 'Tippen zum Scannen' : 'Belege hier hineinwerfen'), el('span', { class: 'lbl' }, S.mobil ? 'oder PDF, Foto, Mail-Anhang wählen' : 'PDF, Foto oder Mail-Anhang – die Texterkennung schlägt Rubrik und Betrag vor.')));
   feld.addEventListener('dragover', ev => { ev.preventDefault(); feld.classList.add('drueber'); $('#erfText').textContent = 'Loslassen zum Erfassen'; });
-  feld.addEventListener('dragleave', () => { feld.classList.remove('drueber'); $('#erfText').textContent = S.mobil ? 'Tippen zum Scannen' : 'Belege hier ablegen'; });
+  feld.addEventListener('dragleave', () => { feld.classList.remove('drueber'); $('#erfText').textContent = S.mobil ? 'Tippen zum Scannen' : 'Belege hier hineinwerfen'; });
   const quellen = el('div', { class: 'quellen' },
     el('button', { class: 'pill klein', onclick: () => datei.click() }, 'Dateien'),
     el('button', { class: 'pill klein', onclick: () => fotos.click() }, 'Fotos'),
@@ -1610,23 +1710,38 @@ function ansichtEingang() {
   const aelteste = S.eingang.length ? Math.min(...S.eingang.map(e => e.file.lastModified)) : null;
   const alter = aelteste ? Math.floor((Date.now() - aelteste) / 86400000) : 0;
   const nAna = S.eingang.filter(analysiert).length;
+  const modus = S.ansicht === 'vorschlaege' ? (lsRoh('wb-belegbuch-vorschlag-modus') || 'karussell') : 'karten';
+  const liste = vorschlagsListe();
+  const sicher = liste.filter(e => { const x = S.analyse[e.name]?.vorschlag; return x && x.sicherheit === 'hoch' && !x.fehlt.length && !x.dublette; });
+  const auswahl = document.body.classList.contains('auswahl');
   const v = el('section', { class: 'view' });
-  v.append(el('div', { class: 'kopf' },
-    el('div', {}, el('h1', { html: n ? `${n} Beleg${n > 1 ? 'e' : ''} <em>im Eingang.</em>` : `Eingang <em>ist leer.</em>` }),
-      el('p', { class: 'unter' }, n ? `Ältester seit ${alter === 0 ? 'heute' : alter + ' Tag' + (alter > 1 ? 'en' : '')} · ${nAna} analysiert` : 'Neue Belege vom iPhone erscheinen hier, sobald iCloud sie geladen hat.')),
+  v.append(bbMappe());
+  v.append(el('div', { class: 'bb-kopf' },
+    el('h2', {}, 'Eingang'), el('span', { class: 'bb-zahl', title: n ? `Ältester seit ${alter === 0 ? 'heute' : alter + ' Tag' + (alter > 1 ? 'en' : '')} · ${nAna} analysiert` : '' }, n),
+    n ? el('div', { class: 'seg', role: 'group', 'aria-label': 'Darstellung' },
+      el('button', { 'aria-pressed': String(modus === 'karten'), onclick: () => geheZu('eingang') }, 'Karten'),
+      el('button', { 'aria-pressed': String(modus === 'karussell'), onclick: () => { lsRoh('wb-belegbuch-vorschlag-modus', 'karussell'); geheZu('vorschlaege'); } }, 'Sortiertisch'),
+      el('button', { 'aria-pressed': String(modus === 'liste'), onclick: () => { lsRoh('wb-belegbuch-vorschlag-modus', 'liste'); geheZu('vorschlaege'); } }, 'Liste')) : null,
     el('span', { class: 'sp' }),
-    n ? el('button', { class: 'pill', onclick: async () => { await ladeEingang(); zeichne(); toast('Eingang neu gelesen'); } }, 'Neu lesen') : null,
-    n ? el('button', { class: 'pill', onclick: () => { document.body.classList.toggle('auswahl'); S.auswahl = new Set(); zeichne(); } }, document.body.classList.contains('auswahl') ? 'Fertig' : 'Auswählen') : null,
-    n ? el('button', { class: 'pill primary', onclick: analyseUndWeiter }, nAna < n ? `Analysieren → Einsortieren` : 'Einsortieren →') : null));
+    n && modus === 'karten' ? el('button', { class: 'pill klein', onclick: async () => { await ladeEingang(); zeichne(); toast('Eingang neu gelesen'); } }, 'Neu lesen') : null,
+    n && modus === 'karten' ? el('button', { class: 'pill klein', onclick: () => { document.body.classList.toggle('auswahl'); S.auswahl = new Set(); zeichne(); } }, auswahl ? 'Fertig' : 'Auswählen') : null,
+    S.zurueck.size && modus !== 'karten' ? el('button', { class: 'pill klein', onclick: () => { S.zurueck.clear(); zeichne(); } }, `${S.zurueck.size} zurückgestellt zeigen`) : null,
+    sicher.length && !auswahl ? el('button', { class: 'pill klein', onclick: () => alleSicheren(sicher) }, `Alle sicheren ablegen (${sicher.length})`) : null,
+    n && nAna < n && !ANALYSE.laeuft ? el('button', { class: 'pill primary klein', onclick: () => analysiereEingang() }, `${n - nAna} analysieren`) : null));
   if (alter > 30) v.append(el('div', { class: 'hinweis' }, `Der älteste Beleg liegt seit ${alter} Tagen im Eingang.`));
-  v.append(erfassungsfeld());
+  if (modus === 'karten') v.append(erfassungsfeld());
   if (ANALYSE.laeuft) v.append(analyseTafel());
-  if (document.body.classList.contains('auswahl') && S.auswahl?.size) v.append(el('div', { class: 'tafel', style: { display: 'flex', gap: '10px', alignItems: 'center' } },
+  if (auswahl && S.auswahl?.size) v.append(el('div', { class: 'tafel', style: { display: 'flex', gap: '10px', alignItems: 'center' } },
     el('span', {}, `${S.auswahl.size} ausgewählt`), el('span', { style: { flex: 1 } }),
     S.auswahl.size > 1 ? el('button', { class: 'pill', onclick: () => zusammenfuegen([...S.auswahl]) }, 'Zusammenfügen') : null,
     el('button', { class: 'pill gefahr', onclick: async () => { for (const nm of S.auswahl) await verwerfen(nm); toast(`${S.auswahl.size} in den Papierkorb`); S.auswahl = new Set(); schreibeLesekopien(); zeichne(); } }, 'Verwerfen')));
+  if (modus !== 'karten') {
+    if (!liste.length) { v.append(el('div', { class: 'leer' }, el('b', {}, 'Nichts mehr einzusortieren.'), el('button', { class: 'pill', style: { marginTop: '12px' }, onclick: () => geheZu('ablage') }, 'Zur Ablage →'))); return v; }
+    v.append(modus === 'karussell' ? karussell(liste) : pruefliste(liste));
+    return v;
+  }
   if (!n) v.append(el('div', { class: 'leer' }, el('b', {}, 'Nichts zu tun.'), 'Belege hierher ziehen oder am iPhone mit „Beleg scannen“ erfassen.'));
-  const raster = el('div', { class: 'raster' });
+  const raster = el('div', { class: 'raster karten' });
   S.eingang.forEach((e, i) => raster.append(kachel(e, i)));
   v.append(raster);
   return v;
@@ -1645,9 +1760,9 @@ function aktualisiereAnalyse() {
   const z = $('#anaZahl'), b = $('#anaBalken'), tx = $('#anaText');
   if (z) z.textContent = `${ANALYSE.n} von ${ANALYSE.von}`; if (b) b.style.width = (ANALYSE.n / ANALYSE.von * 100) + '%'; if (tx) tx.textContent = ANALYSE.text;
 }
-async function analyseUndWeiter() { await analysiereEingang(); if (S.eingang.some(analysiert)) geheZu('vorschlaege'); }
+async function analyseUndWeiter() { await analysiereEingang(); zeichne(); }
 function kachel(e, i) {
-  const a = S.analyse[e.name]; const f = a?.felder;
+  const a = S.analyse[e.name]; const f = a?.felder; const v = a?.vorschlag;
   const blatt = el('div', { class: 'blatt' });
   vorschau(e.file).then(u => blatt.append(bildEl(u)));
   let status;
@@ -1655,14 +1770,27 @@ function kachel(e, i) {
   else if (a?.vorschlag?.dublette) status = el('span', { class: 'badge warn' }, 'Dublette?');
   else if (f) status = el('span', { class: 'badge ok' }, 'analysiert');
   else status = null;
-  const k = el('button', { class: 'kachel' + (e.neu ? ' neu-leuchten' : '') + (S.auswahl?.has(e.name) ? ' gewaehlt' : ''), style: { animationDelay: Math.min(i, 12) * 40 + 'ms' }, 'aria-label': e.name,
+  const k = el('button', { class: 'kachel' + (e.neu ? ' neu-leuchten' : '') + (S.auswahl?.has(e.name) ? ' gewaehlt' : ''), 'aria-label': e.name,
     onclick: () => { if (document.body.classList.contains('auswahl')) { S.auswahl.has(e.name) ? S.auswahl.delete(e.name) : S.auswahl.add(e.name); zeichne(); } else zoom(i); } },
     el('span', { class: 'haken' }), blatt,
     f ? el('span', { class: 'wer' }, f.aussteller || 'Unbekannt') : null,
     el('span', { class: 'zeile' }, el('span', { class: 'mono' }, erfasstAm(e).replace(/^\d{4}-(\d{2})-(\d{2})T/, '$2.$1. ')), el('span', { style: { flex: 1 } }), f?.betrag != null ? el('span', { class: 'mono geld' }, fEur(f.betrag)) : status));
   let langT; k.addEventListener('pointerdown', () => { langT = setTimeout(() => { document.body.classList.add('auswahl'); S.auswahl = new Set([e.name]); zeichne(); }, 600); });
   k.addEventListener('pointerup', () => clearTimeout(langT)); k.addEventListener('pointerleave', () => clearTimeout(langT));
-  return k;
+  const rv = v?.rubrik ? rubrikVon(S.bereich, v.rubrik) : null;
+  const w = el('div', { class: 'kachel-w', style: { '--c': v?.rubrik ? rubFarbe(v.rubrik) : 'var(--text-3)', animationDelay: Math.min(i, 12) * 40 + 'ms' } }, k);
+  const fuss = el('div', { class: 'kf' });
+  if (v?.rubrik && !v.dublette) {
+    fuss.append(el('span', { class: 'rub', title: (v.gruende || []).join(' · ') }, el('span', { class: 'punkt p-' + v.sicherheit, title: 'Sicherheit ' + v.sicherheit }), v.rubrik + (rv ? ' · ' + rv.n : '') + (v.objekt ? ' · ' + v.objekt : '')),
+      el('button', { class: 'ok-knopf', 'aria-label': `So ablegen: ${v.rubrik}`, title: 'So ablegen', onclick: async () => {
+        if (!fehlendFuer(e, v.rubrik, v.objekt, v.person).length) { w.classList.add('weg'); await sleep(420); }
+        await zuordnen(e, v.rubrik, v.objekt); w.classList.remove('weg');
+      } }, '✓'));
+  } else if (v?.dublette) fuss.append(el('span', { class: 'rub leer' }, 'Dublette?'), el('button', { class: 'pill klein', style: { marginLeft: 'auto' }, onclick: () => zoom(i) }, 'Prüfen'));
+  else if (f) fuss.append(el('span', { class: 'rub leer' }, 'Rubrik?'), el('button', { class: 'pill klein', style: { marginLeft: 'auto' }, onclick: () => aendernBlatt(e) }, 'Zuordnen …'));
+  else fuss.append(el('span', { class: 'rub leer' }, a?.fehler ? 'Lesefehler' : 'noch nicht gelesen'));
+  w.append(fuss);
+  return w;
 }
 /* Zoom auf einen Beleg im Eingang */
 function zoom(i) {
@@ -2030,8 +2158,9 @@ function ansichtOffen() {
   const summe = offen.reduce((s, b) => s + (b.betrag || 0), 0);
   const ueber = offen.filter(b => b.faellig && tageBis(b.faellig) < 0), bald = offen.filter(b => b.faellig && tageBis(b.faellig) >= 0 && tageBis(b.faellig) <= 7);
   const summenEl = el('span', { class: 'mono', id: 'offenSumme' }, fEur(summe));
-  v.append(el('div', { class: 'kopf' }, el('div', {}, el('h1', {}, summenEl, ' ', el('em', {}, 'noch offen.')),
-    el('p', { class: 'unter' }, offen.length ? [el('span', { class: 'rot' }, `${ueber.length} überfällig`), ' · ', el('span', { style: { color: 'var(--amber)' } }, `${bald.length} fällig in 7 Tagen`), ` · ${offen.length - ueber.length - bald.length} später`] : 'Keine offene Rechnung.')),
+  v.append(bbMappe());
+  v.append(el('div', { class: 'bb-kopf' }, el('h2', {}, 'Noch zu zahlen'), el('span', { class: 'bb-zahl' }, summenEl),
+    offen.length ? el('span', { class: 'lbl' }, el('span', { class: 'rot' }, `${ueber.length} überfällig`), ' · ', el('span', { style: { color: 'var(--amber)' } }, `${bald.length} in 7 Tagen`), ` · ${offen.length - ueber.length - bald.length} später`) : null,
     el('span', { class: 'sp' }), S.cfg.erinnerung.apple && offen.length ? el('button', { class: 'pill', onclick: () => erinnerungAnlegen(offen) }, 'Alle erinnern') : null));
   v.append(el('div', { id: 'umzugPlatz' }));
   if (!offen.length) { v.append(el('div', { class: 'leer' }, el('b', {}, 'Alles bezahlt.'), 'Offene Rechnungen erscheinen hier, sobald sie abgelegt sind.')); return v; }
@@ -2048,7 +2177,7 @@ function offenZeile(b, summenEl) {
   const auf = S.offenAuf === b.id;
   const z = el('div', { class: 'zeile-o' + (auf ? ' auf' : '') });
   const knopf = el('button', { class: 'pill klein', onclick: () => bezahlen(b, z, knopf, summenEl) }, 'Bezahlt');
-  z.append(el('div', { class: 'z1' },
+  z.append(el('div', { class: 'z1' }, fristRing(b),
     el('button', { class: 'wer', onclick: () => { S.offenAuf = auf ? null : b.id; zeichneInhalt(); } }, b.aussteller, ' ', el('span', { class: 'lbl' }, '· ', el('span', { class: 'mono' }, fKurz(b.faellig)), ' · ', relTage(b.faellig), b.faelligAngenommen ? ' (angenommen)' : '', b.jahr ? ` · ${b.jahr}` : '')),
     el('span', { class: 'rp' }, b.rubrik), el('span', { class: 'mono geld' }, fEur(b.betrag)), knopf));
   if (auf) z.append(el('div', { class: 'z2' },
@@ -2120,23 +2249,15 @@ function ansichtAblage() {
   const faktor = b => ver === 'einzel' ? anteilPerson(b, S.ablagePerson, jahr) : 1;
   const summe = belege.filter(b => b.zahlstatus !== 'offen').reduce((s, b) => s + (relevant(b) || 0) * faktor(b), 0);
   const offen = belege.filter(b => b.zahlstatus === 'offen');
-  v.append(el('div', { class: 'kopf' },
-    el('div', {}, el('h1', { html: istDauer ? 'Dauer<em>unterlagen.</em>' : `Belege ${jahr} <em>an einem Ort.</em>` }),
-      el('p', { class: 'unter' }, istDauer ? 'Jahresunabhängig – zählen in keine Steuersumme.' : `${ver === 'einzel' ? 'Einzelveranlagung' : ver === 'zusammen' ? 'Zusammenveranlagung' : 'Kontor'}${S.cfg.abgeschlossen.includes(jahr) ? ' · abgeschlossen' : ''}${S.cfg.ust?.[jahr] && S.bereich === 'kontor' ? ' · ' + (S.cfg.ust[jahr] === 'regel' ? 'regelbesteuert' : 'Kleinunternehmer') : ''}`)),
+  v.append(bbMappe({ summe, offen }));
+  v.append(el('div', { class: 'bb-kopf' }, el('h2', {}, istDauer ? 'Dauerunterlagen' : 'Ablage ' + jahr),
+    el('span', { class: 'bb-zahl' }, istDauer ? 'jahresunabhängig' : `${ver === 'einzel' ? 'Einzelveranlagung' : ver === 'zusammen' ? 'Zusammenveranlagung' : 'Kontor'}${S.cfg.abgeschlossen.includes(jahr) ? ' · abgeschlossen' : ''}${S.cfg.ust?.[jahr] && S.bereich === 'kontor' ? ' · ' + (S.cfg.ust[jahr] === 'regel' ? 'regelbesteuert' : 'Kleinunternehmer') : ''}`),
     el('span', { class: 'sp' }),
     el('div', { class: 'seg' }, el('button', { 'aria-pressed': String(modus === 'rubriken'), onclick: () => { S.ablageModus = 'rubriken'; zeichneInhalt(); } }, 'Rubriken'), el('button', { 'aria-pressed': String(modus === 'ordner'), onclick: () => { S.ablageModus = 'ordner'; zeichneInhalt(); } }, 'Ordner'))));
-  v.append(el('div', { class: 'chips' }, jahreVorhanden().map(j => el('button', { class: 'chip', 'aria-pressed': String(jahr === j), onclick: () => { S.ablageJahr = j; S.jahr = j; zeichneInhalt(); } }, j)),
-    el('button', { class: 'chip', 'aria-pressed': String(istDauer), onclick: () => { S.ablageJahr = 'dauer'; zeichneInhalt(); } }, 'Dauerunterlagen')));
   if (!istDauer && personen.length > 1) {
     if (ver === 'einzel') v.append(el('div', { class: 'seg' }, personen.map(p => el('button', { 'aria-pressed': String(S.ablagePerson === p.kurz), onclick: () => { S.ablagePerson = p.kurz; zeichneInhalt(); } }, p.name || p.kurz))));
     else { S.personFilter ||= new Set(); v.append(el('div', { class: 'chips' }, el('span', { class: 'lbl', style: { alignSelf: 'center' } }, 'Person'), [...personen.map(p => p.kurz), 'Gemeinsam'].map(k => el('button', { class: 'chip', 'aria-pressed': String(S.personFilter.has(k)), onclick: () => { S.personFilter.has(k) ? S.personFilter.delete(k) : S.personFilter.add(k); zeichneInhalt(); } }, k)))); }
   }
-  const pruef = istDauer ? [] : vollstaendigkeit(jahr);
-  v.append(el('div', { class: 'tafel kennz' },
-    el('div', {}, el('span', { class: 'lbl' }, 'Belege'), el('b', {}, belege.length)),
-    istDauer ? null : el('div', {}, el('span', { class: 'lbl' }, 'Summe (relevant)'), el('b', { class: 'geld' }, fEur(summe))),
-    istDauer ? null : el('div', {}, el('span', { class: 'lbl' }, 'Offen'), el('b', { class: offen.length ? 'warn' : '' }, `${offen.length} · ${fEur(offen.reduce((s, b) => s + (b.betrag || 0), 0))}`)),
-    istDauer ? null : el('div', { style: { flex: 1, minWidth: '200px' } }, el('span', { class: 'lbl' }, 'Steuerpaket'), el('span', { class: pruef.length ? 'warn' : 'ok', style: { fontSize: '14px' } }, pruef.length ? `${pruef.length} Hinweis${pruef.length > 1 ? 'e' : ''}: ${pruef[0]}` : 'vollständig'))));
   v.append(modus === 'ordner' ? ordnerAnsicht(istDauer ? ['_Dauerunterlagen'] : [String(jahr)]) : rubrikenAnsicht(belege, jahr, faktor, istDauer));
   return v;
 }
@@ -2146,21 +2267,23 @@ function rubrikStatus(r, liste, jahr) {
   return liste.length ? 'hoch' : 'leer';
 }
 function rubrikenAnsicht(belege, jahr, faktor, istDauer) {
-  const box = el('div', { class: 'liste' });
+  const box = el('div', { class: 'ordner' });
   const R = RUBRIKEN[S.bereich].filter(r => istDauer ? r.dauer : !r.dauer);
   // Verweise (LH-020): erscheinen ohne Summe in der zweiten Rubrik
   const verweise = istDauer ? alleBelege().filter(b => b.verweis && rubrikVon(S.bereich, b.verweis)?.dauer) : belege.filter(b => b.verweis);
-  for (const r of R) {
+  R.forEach((r, ri) => {
     const liste = belege.filter(b => b.rubrik === r.k); const ver = verweise.filter(b => b.verweis === r.k);
     const summe = liste.filter(b => b.zahlstatus !== 'offen').reduce((s, b) => s + (relevant(b) || 0) * faktor(b), 0);
     const auf = S.rubrikAuf === r.k;
     const st = istDauer ? 'hoch' : rubrikStatus(r, liste, jahr);
-    const z = el('div', { class: 'rubrik-z', style: { opacity: liste.length || ver.length ? 1 : .55 } },
-      el('button', { 'aria-expanded': String(auf), onclick: () => { S.rubrikAuf = auf ? null : r.k; zeichneInhalt(); } },
-        el('span', { class: 'punkt p-' + st }), el('span', { class: 'k' }, r.k), el('span', { class: 'n' }, r.n, ' ', el('span', { class: 'lbl' }, r.anlage !== '–' ? '· ' + r.anlage : '')),
-        el('span', { class: 'mono lbl' }, liste.length + (ver.length ? ` + ${ver.length} Verweis` : '')), el('span', { class: 'mono geld', style: { width: '120px', textAlign: 'right' } }, r.keinZahl || istDauer ? '' : fEur(summe))));
+    const mon = Array(12).fill(0); liste.forEach(b => { const m = +(b.datum || '').slice(5, 7); if (m) mon[m - 1] += Math.abs(b.betrag || 0) || 1; });
+    const max = Math.max(...mon) || 1;
+    box.append(el('button', { class: 'od' + (liste.length || ver.length ? '' : ' leer'), 'aria-expanded': String(auf), style: { '--c': rubFarbe(r.k), animationDelay: Math.min(ri, 12) * 35 + 'ms' }, onclick: () => { S.rubrikAuf = auf ? null : r.k; zeichneInhalt(); } },
+      el('span', { class: 'punkt p-' + st }), el('span', { class: 'kz' }, r.k), el('b', {}, r.n), el('small', {}, r.anlage !== '–' ? r.anlage : ' '),
+      el('span', { class: 'sum' }, r.keinZahl || istDauer ? (liste.length + ' Belege') : liste.length ? fEur(summe).replace(',00 €', ' €') : '–', r.keinZahl || istDauer ? null : el('span', {}, liste.length + (ver.length ? ` + ${ver.length}` : ''))),
+      istDauer ? null : el('span', { class: 'mon', 'aria-hidden': 'true' }, mon.map(x => el('i', { style: { height: (x ? Math.max(8, x / max * 100) : 0) + '%' } })))));
     if (auf) {
-      const inhalt = el('div', { class: 'inhalt' });
+      const inhalt = el('div', { class: 'od-inhalt', style: { '--c': rubFarbe(r.k) } });
       const monate = {};
       for (const b of [...liste].sort((a, b) => (a.datum || '').localeCompare(b.datum || ''))) (monate[(b.datum || '').slice(0, 7)] ||= []).push(b);
       for (const [m, bs] of Object.entries(monate)) {
@@ -2169,10 +2292,9 @@ function rubrikenAnsicht(belege, jahr, faktor, istDauer) {
       }
       if (ver.length) { inhalt.append(el('div', { class: 'monat' }, 'Verweise')); ver.forEach(b => inhalt.append(belegZeile(b, 0, true))); }
       if (!liste.length && !ver.length) inhalt.append(el('div', { class: 'lbl', style: { padding: '8px' } }, 'Keine Belege.'));
-      z.append(inhalt);
+      box.append(inhalt);
     }
-    box.append(z);
-  }
+  });
   return box;
 }
 function belegZeile(b, faktor = 1, verweis = false) {
@@ -2190,8 +2312,80 @@ function vollstaendigkeit(jahr) {
     for (const p of S.cfg.personen) if (p.arbeitnehmer !== false && !l.some(b => b.rubrik === 'N-LStB' && b.person === p.kurz)) out.push(Object.assign(new String(`Lohnsteuerbescheinigung ${p.name || p.kurz} fehlt`), { rubrik: 'N-LStB' }));
     for (const o of S.cfg.objekte.filter(o => o.art === 'vermietet')) if (!l.some(b => b.rubrik === 'V' && b.objekt === o.name && /nebenkosten|hausgeld|abrechnung/i.test((b.volltext || '') + b.aussteller + (b.kurz || '')))) out.push(Object.assign(new String(`Hausgeld-/Nebenkostenabrechnung ${o.name} fehlt`), { rubrik: 'V' }));
   }
+  for (const x of wiederkehrend(jahr).fehlt) out.push(Object.assign(new String(`${x.name} ${x.monat} fehlt`), { rubrik: x.rubrik, wk: true }));
   const offen = l.filter(b => b.zahlstatus === 'offen').length; if (offen) out.push(`${offen} offene Rechnung${offen > 1 ? 'en' : ''} (zählen erst nach Zahlung)`);
   return out;
+}
+/* Wiederkehrende Belege: Aussteller mit mindestens drei Monaten im Jahr oder Vorjahr erwartet man jeden Monat */
+const MONATSNAMEN = Array.from({ length: 12 }, (_, i) => new Date(2000, i, 1).toLocaleDateString('de-DE', { month: 'long' }));
+function wiederkehrend(jahr) {
+  const j = Number(jahr); const leer = { erwartet: 0, da: 0, fehlt: [] };
+  const jetzt = new Date(); const jj = jetzt.getFullYear(), mm = jetzt.getMonth() + 1;
+  if (!j || j > jj) return leer;
+  const gruppen = {};
+  for (const b of alleBelege()) {
+    if (!b.datum || !b.aussteller || b.verweis === b.rubrik) continue;
+    const y = +b.datum.slice(0, 4), m = +b.datum.slice(5, 7); if (y < j - 1 || !m) continue;
+    if (rubrikVon(S.bereich, b.rubrik)?.dauer) continue;
+    const k = b.rubrik + '|' + normName(b.aussteller);
+    const g = gruppen[k] ||= { rubrik: b.rubrik, name: b.aussteller.trim(), vor: new Set(), hier: new Set(), spaeter: false };
+    if (y > j) g.spaeter = true; else (y === j ? g.hier : g.vor).add(m);
+  }
+  const ende = j < jj ? 12 : mm - 1; // der laufende Monat zählt noch nicht
+  let erwartet = 0, da = 0; const fehlt = [];
+  for (const g of Object.values(gruppen)) {
+    if (Math.max(g.vor.size, g.hier.size) < 3) continue;
+    const letzter = g.hier.size ? Math.max(...g.hier) : 0;
+    const start = g.vor.has(12) || g.vor.has(11) ? 1 : (g.hier.size ? Math.min(...g.hier) : 13);
+    let bis = g.spaeter ? 12 : letzter;
+    if (j === jj && (letzter >= mm - 2 || (!g.hier.size && g.vor.has(12) && mm <= 3))) bis = ende;
+    bis = Math.min(bis, ende);
+    for (let m = start; m <= bis; m++) { erwartet++; if (g.hier.has(m)) da++; else fehlt.push({ name: g.name, monat: MONATSNAMEN[m - 1], rubrik: g.rubrik, m }); }
+  }
+  fehlt.sort((a, b) => b.m - a.m);
+  return { erwartet, da, fehlt };
+}
+function paketQuote(jahr) {
+  const w = wiederkehrend(jahr); const l = S.index[String(jahr)] || [];
+  const liste = vollstaendigkeit(jahr);
+  const pflicht = liste.filter(x => x.rubrik && !x.wk);
+  const pflichtErw = S.bereich === 'privat' ? S.cfg.personen.filter(p => p.arbeitnehmer !== false).length + S.cfg.objekte.filter(o => o.art === 'vermietet').length : 0;
+  const offen = l.filter(b => b.zahlstatus === 'offen').length;
+  const erwartet = w.erwartet + pflichtErw + offen, da = w.da + (pflichtErw - pflicht.length);
+  const quote = erwartet ? Math.max(0, Math.min(100, Math.round(da / erwartet * 100))) : (l.length ? 100 : null);
+  return { quote, fehlt: [...pflicht.map(String), ...w.fehlt.map(x => `${x.name} ${x.monat}`)], offen };
+}
+const RUB_FARBEN = ['var(--info)', 'var(--free)', 'var(--amber)', 'var(--lila)', 'var(--geld)', 'var(--over)'];
+function rubFarbe(k) { const i = RUBRIKEN[S.bereich].findIndex(r => r.k === k); return i < 0 ? 'var(--text-3)' : RUB_FARBEN[i % RUB_FARBEN.length]; }
+function fristRing(b) {
+  if (!b.faellig) return el('span', { class: 'bb-frist', style: { '--c': 'var(--text-3)' } }, el('span', {}, '–'));
+  const t = tageBis(b.faellig);
+  if (t < 0) return el('span', { class: 'bb-frist', title: 'überfällig', style: { '--p': 100, '--c': 'var(--red-ink)' } }, el('span', { style: { color: 'var(--red-ink)' } }, '!'));
+  return el('span', { class: 'bb-frist', title: `noch ${t} Tage`, style: { '--p': Math.max(6, Math.round(100 - t / 30 * 100)), '--c': t <= 7 ? 'var(--amber)' : 'var(--info)' } }, el('span', {}, t));
+}
+/* Jahresmappe: Steuerpaket-Quote, Jahr, fehlende Belege, Summen */
+function bbMappe(opt = {}) {
+  const jahr = S.ablageJahr || S.jahr; const istDauer = jahr === 'dauer';
+  const belege = S.index[istDauer ? 'dauer' : String(jahr)] || [];
+  const offen = opt.offen || belege.filter(b => b.zahlstatus === 'offen');
+  const summe = opt.summe ?? belege.filter(b => b.zahlstatus !== 'offen').reduce((s, b) => s + (relevant(b) || 0), 0);
+  const q = istDauer ? { quote: null, fehlt: [] } : paketQuote(jahr);
+  const chips = el('div', { class: 'chips' }, jahreVorhanden().map(j => el('button', { class: 'chip', 'aria-pressed': String(jahr === j), onclick: () => { S.ablageJahr = j; S.jahr = j; zeichneInhalt(); } }, j)),
+    el('button', { class: 'chip', 'aria-pressed': String(istDauer), onclick: () => { S.ablageJahr = 'dauer'; if (S.ansicht === 'ablage') zeichneInhalt(); else geheZu('ablage'); } }, 'Dauerunterlagen'));
+  const n = belege.length, k = q.fehlt.length;
+  const satz = istDauer ? `<b>${n} Dauerunterlage${n === 1 ? '' : 'n'}</b> – jahresunabhängig, ohne Steuersumme.`
+    : !n ? `<b>Noch keine Belege</b> für ${jahr}.`
+    : k ? `<b>${n} Beleg${n === 1 ? '' : 'e'}</b> abgelegt – ${k} fehl${k === 1 ? 't' : 'en'} noch fürs Steuerpaket.`
+    : `<b>${n} Beleg${n === 1 ? '' : 'e'}</b> abgelegt – das Steuerpaket ist vollständig.`;
+  const ring = el('button', { class: 'bb-paket' + (q.quote === 100 ? ' voll' : ''), title: 'Steuerpaket …', 'aria-label': istDauer ? `${n} Dauerunterlagen` : `Steuerpaket ${q.quote ?? 0} Prozent vollständig`, onclick: () => istDauer ? null : zeigeSteuerpaket() },
+    el('span', { class: 'rg' }), el('span', { class: 'in' }, el('b', {}, istDauer ? n : q.quote == null ? '–' : q.quote + ' %'), el('small', {}, istDauer ? 'Unterlagen' : S.cfg.abgeschlossen.includes(jahr) ? 'abgeschlossen' : 'Steuerpaket')));
+  requestAnimationFrame(() => requestAnimationFrame(() => ring.style.setProperty('--p', istDauer ? 100 : (q.quote ?? 0))));
+  return el('section', { class: 'bb-mappe' }, ring,
+    el('div', { class: 'bb-mitte' }, chips, el('p', { class: 'bb-satz', html: satz }),
+      k ? el('div', { class: 'bb-fehlt' }, q.fehlt.slice(0, 4).map(x => el('span', {}, x)), k > 4 ? el('span', { class: 'mehr' }, `+ ${k - 4} weitere`) : null) : null),
+    istDauer ? null : el('div', { class: 'bb-mz' },
+      el('div', {}, el('small', {}, 'Summe relevant'), el('b', { class: 'geld' }, fEur(summe))),
+      el('div', { class: offen.length ? 'rot' : '' }, el('small', {}, 'Offen'), el('b', {}, offen.length ? `${offen.length} · ${fEur(offen.reduce((s, b) => s + (b.betrag || 0), 0))}` : '–'))));
 }
 /* Ordneransicht mit Abweichungen (LH-054, LH-055) */
 function ordnerAnsicht(start) {
